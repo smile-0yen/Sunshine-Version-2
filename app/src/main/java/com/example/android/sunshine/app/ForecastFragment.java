@@ -117,7 +117,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         // The CursorAdapter will take data from our cursor and populate the ListView
         // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
         // up with an empty list the first time we run.
-        mForecastAdapter = new ForecastAdapter(getActivity(), cur, 0);
+        mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
 
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -127,6 +127,12 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         listView.setAdapter(mForecastAdapter);
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        getLoaderManager().initLoader(FORECAST_LOADER, null, this);
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void updateWeather() {
